@@ -1,24 +1,34 @@
-package com.example.entity;
+package com.example.demo.entity;
+
+
+
+import io.micrometer.common.lang.NonNull;
 
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "utilisateurs")
 public  class User {
 	private static final long serialVersionUID=1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	protected int id;
+	 @NonNull
     private String nom;
+	 @NonNull
     private String prenom;
+	 @NonNull
     private String email;
+    @NonNull
     private String password;
-	public User(Long id, String nom, String prenom, String email, String password) {
-		this.id = id;
+   
+    
+	public User( String nom, String prenom, String email, String password) {
 		this.nom = nom;
 		this.prenom = prenom;
 		this.email = email;
@@ -27,11 +37,11 @@ public  class User {
     
     public User() {}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

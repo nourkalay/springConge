@@ -1,10 +1,11 @@
-package com.example.entity;
+package com.example.demo.entity;
 
-import java.sql.Date;
 
-import com.exemple.enumeration.Statut;
-import com.exemple.enumeration.TypeConge;
 
+import com.exemple.demo.enumeration.Statut;
+import com.exemple.demo.enumeration.TypeConge;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "demande")
@@ -22,11 +24,16 @@ public class DemandeConge {
 	  
 		@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    private Long id;
-	    private Date dateDebut;
-	    private Date dateFin;
+	    private int id;
+		@Column(length = 10)
+		 @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La dateDebut doit être au format yyyy-MM-dd")
+	    private String dateDebut;
+		@Column(length = 10)
+		 @Pattern(regexp = "^\\d{4}-\\d{2}-\\d{2}$", message = "La dateDebut doit être au format yyyy-MM-dd")
+	    private String dateFin;
 	    @Enumerated(EnumType.STRING)
 	    private Statut statut = Statut.EN_ATTENTE;
+	    @Column(length = 15)
 	    @Enumerated(EnumType.STRING)
 	    private TypeConge typeConge;
 	    
@@ -38,29 +45,33 @@ public class DemandeConge {
 	    @JoinColumn(name = "agent_id")
 	    private Agent agent;
 	    
-		public DemandeConge(Long id, Date dateDebut, Date dateFin, Statut statut, TypeConge typeConge) {
+		public DemandeConge(int id, String dateDebut, String dateFin, Statut statut, TypeConge typeConge,employee employe ) {
 			this.id = id;
 			this.dateDebut = dateDebut;
 			this.dateFin = dateFin;
 			this.statut = statut;
 			this.typeConge = typeConge;
+			this.employe=employe;
+			
 		}
-		public Long getId() {
+		public DemandeConge() {
+		}
+		public int getId() {
 			return id;
 		}
-		public void setId(Long id) {
+		public void setId(int id) {
 			this.id = id;
 		}
-		public Date getDateDebut() {
+		public String getDateDebut() {
 			return dateDebut;
 		}
-		public void setDateDebut(Date dateDebut) {
+		public void setDateDebut(String dateDebut) {
 			this.dateDebut = dateDebut;
 		}
-		public Date getDateFin() {
+		public String getDateFin() {
 			return dateFin;
 		}
-		public void setDateFin(Date dateFin) {
+		public void setDateFin(String dateFin) {
 			this.dateFin = dateFin;
 		}
 		public Statut getStatut() {
@@ -75,7 +86,19 @@ public class DemandeConge {
 		public void setTypeConge(TypeConge typeConge) {
 			this.typeConge = typeConge;
 		}
-		
+		public employee getEmploye() {
+	        return employe;
+	    }
+
+	    public void setEmploye(employee employe) {
+	        this.employe = employe;
+	    }
+		public Agent getAgent() {
+			return agent;
+		}
+		public void setAgent(Agent agent) {
+			this.agent = agent;
+		}
 		
 	    
 	    
